@@ -25,4 +25,20 @@ Remember to download certificate https://confluence.csc.fi/x/wQHcAQ
 ```
 <CredentialResolver type="File" key="sp.key" certificate="sp.crt"/>
 ```
+Protect your service with shibboleth
+```
+<VirtualHost *:443>
+  DocumentRoot <DOCUMENT ROOT>
+  ServerAlias <SERVER_ALIAS>
+  ErrorLog /var/www/<YOUR_SITE>/log/error.log
+  CustomLog /var/www/<YOUR_SITE>/log/access.log combined
+  AllowEncodedSlashes On
+  SSLEngine on
+  <Location /www>
+    AuthType shibboleth
+    ShibRequireSession On
+    require valid-user
+  </Location>
+</VirtualHost>
+```
 
