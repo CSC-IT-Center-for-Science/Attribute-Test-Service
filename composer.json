@@ -4,6 +4,8 @@
     "homepage": "https://github.com/CSC-IT-Center-for-Science/Attribute-Test-Service",
     "type": "cakephp-plugin",
     "license": "MIT",
+    "minimum-stability": "dev",
+    "prefer-stable" : true,
     "require": {
         "php": ">=5.5.9",
         "cakephp/cakephp": "~3.2",
