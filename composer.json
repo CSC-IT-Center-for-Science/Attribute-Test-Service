@@ -1,18 +1,22 @@
 {
-    "name": "CSC-IT-Center-for-Science/Attribute-Test-Service",
-    "description": "Attribute test service for shibboleth",
-    "homepage": "https://github.com/CSC-IT-Center-for-Science/Attribute-Test-Service",
-    "type": "cakephp-plugin",
-    "license": "MIT",
-    "minimum-stability": "dev",
-    "prefer-stable" : true,
-    "require": {
-        "php": ">=5.5.9",
-        "cakephp/cakephp": "~3.2",
-    },
-    "autoload": {
-        "psr-4": {
-            "CSC\\AttributeTest\\": "src"
+    "name": "andrewkirkpatrick/sample",
+    "description": "Sample project",
+    "homepage": "http://www.andrew-kirkpatrick.co.uk",
+    "repositories": [{
+    "type": "package",
+    "package": {
+        "name": "andrewkirkpatrick/library",
+        "version": "0.1.0",
+        "source": {
+                "url": "git@server.co.uk:Repository.git",
+            "type": "git",
+        "reference": "0.1.0"
         }
-    },
+        }
+    }],
+    "require": {
+        "php": ">=5.3.3",
+        "zendframework/zendframework": "2.*",
+        "andrewkirkpatrick/library": "0.1.*"
+    }
 }
