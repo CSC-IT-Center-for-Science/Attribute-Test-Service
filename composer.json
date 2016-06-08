@@ -10,4 +10,9 @@
         "php": ">=5.5.9",
         "cakephp/cakephp": "~3.2",
     },
+    "autoload": {
+        "psr-4": {
+            "CSC\\AttributeTest\\": "src"
+        }
+    },
 }
