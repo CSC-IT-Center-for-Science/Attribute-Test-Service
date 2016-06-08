@@ -1,11 +1,11 @@
 {
-    "require": {
-        "sylius/assortment-bundle": "dev-soft-deleteable-products-disabled"
-    },
     "repositories": [
-    {
-        "type": "vcs",
-        "url": "https://github.com/umpirsky/SyliusAssortmentBundle"
+        {
+            "type": "vcs",
+            "url": "https://github.com/igorw/monolog"
+        }
+    ],
+    "require": {
+        "monolog/monolog": "dev-bugfix"
     }
-]
 }
