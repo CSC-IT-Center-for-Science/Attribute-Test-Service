@@ -42,3 +42,7 @@ Protect your service with shibboleth
 </VirtualHost>
 ```
 
+Download composer.json
+composer update
+composer create-project --prefer-dist cakephp/app www
+
