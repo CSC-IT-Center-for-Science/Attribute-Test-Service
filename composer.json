@@ -1,31 +1,19 @@
 {
-    "name": "CSC-IT-Center-for-Science/Attribute-Test-Service",
-    "description": "Attribute test service for shibboleth",
-    "homepage": "https://github.com/CSC-IT-Center-for-Science/Attribute-Test-Service",
-    "type": "cakephp-plugin",
-    "license": "MIT",
+   "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "csc-it-center-for-science/attribute-test-service",
+                "version": "dev-master",
+                "source": {
+                    "url": "https://github.com/csc-it-center-for-science/attribute-test-service",
+                    "type": "git",
+                    "reference": "origin/master"
+                }
+            }
+        }
+    ],
     "require": {
-        "php": ">=5.5.9",
-        "cakephp/cakephp": "~3.2",
-        "mobiledetect/mobiledetectlib": "2.*",
-        "cakephp/migrations": "~1.0",
-        "cakephp/plugin-installer": "*",
-        "friendsofcake/bootstrap-ui": "^0.5.0"
-    },
-    "require-dev": {
-        "psy/psysh": "@stable",
-        "cakephp/debug_kit": "~3.2",
-        "cakephp/bake": "~1.1"
-    },
-    "suggest": {
-        "phpunit/phpunit": "Allows automated tests to be run without system-wide install.",
-        "cakephp/cakephp-codesniffer": "Allows to check the code against the coding standards used in CakePHP."
-
-    "scripts": {
-        "post-install-cmd": "App\\Console\\Installer::postInstall",
-        "post-create-project-cmd": "App\\Console\\Installer::postInstall",
-        "post-autoload-dump": "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump"
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+        "csc-it-center-for-science/attribute-test-service" : "dev-master"
+    }
 }
