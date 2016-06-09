@@ -1,15 +1,21 @@
 # SAML Attribute Test Service plugin for CakePHP
 
+## Requirements
+* apache2
+* shibboleth service provider
+* php >=5.5.9
+* cakephp/cakephp : ~3.2
+* friendsofcake/bootstrap-ui : ^0.5.0
+
 ## Functionalities
-* Population of all active attributes from the /etc/shibboleth/shibboleth2.xml
+* Population of all active attributes from the /etc/shibboleth/attribute-map.xml
 * Basic add/delete functionality for attributes
 * You can add validation regex for attributes 
 * Comparation of received attributes against attributes in database with validation.
 
 ## Preconditions
-Attribute test service for shibboleth
 
-Preconditions aptitude install libapache2-mod-shib2
+Apache2 webserver installed with libapache2-mod-shib2
 
 modify /etc/shibboleth/shibboleth2.xml
 ```
