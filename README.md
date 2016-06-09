@@ -1,5 +1,11 @@
 # SAML Attribute Test Service plugin for CakePHP
 
+## Functionalities
+* Population of all active attributes from the /etc/shibboleth/shibboleth2.xml
+* Basic add/delete functionality for attributes
+* You can add validation regex for attributes 
+* Comparation of received attributes against attributes in database with validation.
+
 ## Preconditions
 Attribute test service for shibboleth
 
