@@ -32,8 +32,12 @@
       "post-create-project-cmd": "App\\Console\\Installer::postInstall",
       "post-autoload-dump": "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump"
     },
-
-    "minimum-stability": "stable",
+    "extra": {
+      "installer-paths": {
+        "./plugins/Attribute": ["csc-it-center-for-science/attribute-test-service"]
+      }
+    },
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "repositories": [
         {
