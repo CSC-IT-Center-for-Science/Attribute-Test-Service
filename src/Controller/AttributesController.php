@@ -12,7 +12,6 @@ use Cake\Utility\Xml;
  */
 class AttributesController extends AppController
 {
-
     /**
      * Index method
      *
@@ -63,29 +62,47 @@ class AttributesController extends AppController
       endforeach;
       $this->setAction('index');
     }
+
     public function test()
     {
-        foreach ($this->Attributes->find('all') as $attribute) :
-          unset($temp);
-          unset($errors);
-          $temp['validator'] = $attribute['validation'];
-          $attribute['value'] = $this->request->env($attribute->name);
-          if (!empty($attribute['validation'])) {
-                  $validator = new Validator();
-                  $validator
-                    ->allowEmpty('value')
-                    ->add('value', 'validFormat', [
-                          'rule' => array('custom', '/^('.$attribute['validation'].')$/i'),
-                          'message' => 'RegEx match fails.'
-                    ]);
-                  $errors = $validator->errors(array('value'=>$attribute['value']));
-                }
-          $temp['value'] = $attribute['value'];
-          if (!empty($errors)) $temp['errors'] = $errors['value'];
-          $attributes[$attribute['schema']] [$attribute['name']] = $temp;
-        endforeach;
-        $this->set(compact('attributes'));
-        $this->set('_serialize', ['attributes']);
+      $this->loadModel('Releases');
+      foreach ($this->Attributes->find('all') as $attribute) :
+        unset($temp);
+        unset($errors);
+        $temp['validator'] = $attribute['validation'];
+        $attribute['value'] = $this->request->env($attribute->name);
+        $validated = 'N/A';
+        if (!empty($attribute['validation'])) {
+          $validator = new Validator();
+          $validator
+            ->allowEmpty('value')
+            ->add('value', 'validFormat', [
+              'rule' => array('custom', '/^('.$attribute['validation'].')$/i'),
+              'message' => 'RegEx match fails.'
+            ]);
+            $errors = $validator->errors(array('value'=>$attribute['value']));
+            $validated = 'FAILED';
+
+        }
+        $temp['value'] = $attribute['value'];
+        if (!empty($errors)) $temp['errors'] = $errors['value'];
+        
+        $attributes[$attribute['schema']] [$attribute['name']] = $temp;
+        if (!empty($attribute['value'])) {
+          $attr_release = array('attribute_name'=>$attribute['name'],'organization'=>$this->request->env('schacHomeOrganization'),'persistentid'=>$this->request->env('persistent-id'),'validated'=>$validated);
+          $query = $this->Releases->find()->andWhere(['attribute_name'=>$attribute['name'],'organization'=>$this->request->env('schacHomeOrganization'),'persistentid'=>$this->request->env('persistent-id')]);
+          $id = $query->first()->id;
+          if ($id) { 
+            $release = $this->Releases->get($id, ['contain' => [] ]);
+          } else {
+            $release = $this->Releases->newEntity();
+          }
+          $release = $this->Releases->patchEntity($release, $attr_release);
+          $this->Releases->save($release);
+        }
+      endforeach;
+      $this->set(compact('attributes'));
+      $this->set('_serialize', ['attributes']);
     }
 
     /**
