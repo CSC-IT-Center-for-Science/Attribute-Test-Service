@@ -48,3 +48,45 @@ Protect application with shibboleth
 </VirtualHost>
 ```
 ## Installation
+
+### CakePHP
+
+Download and install composer
+```
+curl -s https://getcomposer.org/installer | php
+```
+Create CakePHP project
+```
+php composer.phar create-project --prefer-dist cakephp/app www
+```
+
+### Configure database
+from just baked project directory www/config/app.php, replace following lines to use sqlite datasource.
+```
+'Datasources' => [
+  'default' => [
+    ...
+    'driver' => 'Cake\Database\Driver\Sqlite',
+    'database' => '/var/www/<YOUR_SITE>/db/database.sqlite',
+    ...
+```
+And make sure that cakephp has access to directory where database will be created (example below is too permissive).
+```
+mkdir ../db
+chmod 777 ../db
+```
+
+### Install attribute-test-service plugin
+```
+composer require csc-it-center-for-science/attribute-test-service
+
+# symlink vendor package under plugins
+ln -s  vendor/csc-it-center-for-science/attribute-test-service/ plugins/Attribute
+
+# Migrate database tables from plugin
+./bin/cake migrations migrate -p Attribute
+./bin/cake plugin load Attribute
+composer dumpautoload
+
+
+```
