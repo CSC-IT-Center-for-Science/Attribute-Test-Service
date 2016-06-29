@@ -23,7 +23,7 @@
     "autoload": {
         "psr-4": {
             "App\\": "src",
-            "csc-it-center-for-science\\attribute-test-service\\": "src"
+            "CscItCenterForScience\\AttributeTestService\\": "src"
         }
     },
 
