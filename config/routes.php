@@ -9,4 +9,3 @@ Router::plugin(
         $routes->fallbacks('DashedRoute');
     }
 );
-});
