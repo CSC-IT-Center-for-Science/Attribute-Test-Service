@@ -22,7 +22,8 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src"
+            "App\\": "src",
+            "csc-it-center-for-science\\attribute-test-service\\": "src"
         }
     },
 
@@ -38,18 +39,4 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "package",
-            "package": {
-                "name": "csc-it-center-for-science/attribute-test-service",
-                "version": "dev-master",
-                "source": {
-                    "url": "https://github.com/csc-it-center-for-science/attribute-test-service",
-                    "type": "git",
-                    "reference": "origin/master"
-                }
-            }
-        }
-    ]
 }
