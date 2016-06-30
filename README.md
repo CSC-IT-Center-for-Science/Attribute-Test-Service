@@ -114,4 +114,4 @@ public function initialize()  {
 
 ...
 ```
-And you should be good to go. Attribute plugin should be found from http[s]://<your_site>/attribute/attributes/index.
+And you should be good to go. Attribute plugin should be found from https://YOUR_SITE/attribute/attributes/index.
