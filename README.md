@@ -59,6 +59,8 @@ curl -s https://getcomposer.org/installer | php
 Create CakePHP project
 ```
 php composer.phar create-project --prefer-dist cakephp/app www
+or with global installation
+composer create-project --prefer-dist cakephp/app www
 ```
 
 ### Configure database
@@ -73,18 +75,22 @@ from just baked project directory www/config/app.php, replace following lines to
 ```
 And make sure that cakephp has access to directory where database will be created (example below is too permissive).
 ```
-mkdir ../db
-chmod 777 ../db
+mkdir db; chmod 777 db
 ```
 
 ### Install attribute-test-service plugin
 ```
+cd www
 composer require csc-it-center-for-science/attribute-test-service
+
+# copy needed bootstrap and jquery files in place.
+cp -r vendor/csc-it-center-for-science/attribute-test-service/webroot/js/* webroot/js/.
+cp -r vendor/csc-it-center-for-science/attribute-test-service/webroot/css/* webroot/css/.
 
 # Migrate database tables and load plugin
 ./bin/cake migrations migrate -p CscItCenterForScience/AttributeTestService
+chmod 777 ../db/database.sqlite
 ./bin/cake plugin load -r CscItCenterForScience/AttributeTestService
-
 ```
 
 ### Configure Bootstrap framework
@@ -108,12 +114,4 @@ public function initialize()  {
 
 ...
 ```
-Make sure you have followin files in place.
-```
-webroot/css/bootstrap/bootstrap.css
-webroot/css/fonts/glyphicons-halflinfs-reqular.woff
-
-webroot/js/bootstrap/bootstrap.js
-webroot/js/jquery/jquery.js
-```
-
+And you should be good to go. Attribute plugin should be found from http[s]://<your_site>/attribute/attributes/index.
