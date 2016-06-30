@@ -23,16 +23,16 @@ modify /etc/shibboleth/shibboleth2.xml
 <SSO entityID="https://<YOUR_IDP>/idp/shibboleth"
   SAML2
 </SSO>
-.
+...
 # Example below is for a test service registered to Haka-test federation. It also uses certificate from https://confluence.csc.fi/x/wQHcAQ to validate metadata.
 <MetadataProvider type="XML" uri="https://haka.funet.fi/metadata/haka_test_metadata_signed.xml" backingFilePath="haka_test_metadata_signed.xml" reloadInterval="7200">
   <MetadataFilter type="RequireValidUntil" maxValidityInterval="2419200"/>
   <MetadataFilter type="Signature" certificate="/etc/ssl/certs/haka_testi_2015_sha2.crt"/>
 </MetadataProvider>
-.
+...
 <CredentialResolver type="File" key="sp.key" certificate="sp.crt"/>
 ```
-Protect application with shibboleth
+Protect application with shibboleth in Apache virtualhost configuration.
 ```
 <VirtualHost *:443>
   DocumentRoot <DOCUMENT ROOT> 
@@ -59,7 +59,7 @@ curl -s https://getcomposer.org/installer | php
 Create CakePHP project
 ```
 php composer.phar create-project --prefer-dist cakephp/app www
-or with global installation
+or with global installation (used in these examples).
 composer create-project --prefer-dist cakephp/app www
 ```
 
@@ -80,7 +80,9 @@ mkdir db; chmod 777 db
 
 ### Install attribute-test-service plugin
 ```
+# Change to your created project directory
 cd www
+
 composer require csc-it-center-for-science/attribute-test-service
 
 # copy needed bootstrap and jquery files in place.
@@ -95,12 +97,13 @@ chmod 777 ../db/database.sqlite
 
 ### Configure Bootstrap framework
 ```
+# Copy extra layout types to your project layouts directory
 cp -R vendor/friendsofcake/bootstrap-ui/src/Template/Layout/examples src/Template/Layout/TwitterBootstrap
+
 ./bin/cake plugin load BootstrapUI
 ```
-Configure src\View\AppView.php accordingly.
+Make your AppView class extend BootstrapUI\View\UIView (src/View/AppView.php).
 ```
-...
 # use Cake\View\View;
 use BootstrapUI\View\UIView;
 ...
@@ -111,7 +114,5 @@ public function initialize()  {
   // Don't forget to call the parent::initialize()
   parent::initialize();
 }
-
-...
 ```
 And you should be good to go. Attribute plugin should be found from https://YOUR_SITE/attribute/attributes/index.
