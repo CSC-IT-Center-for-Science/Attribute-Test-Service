@@ -16,11 +16,11 @@ echo $this->element('menu');
    <div class="controls form-inline">
            <div class=" input-append">
 <?=$this->Form->button(__("Save")); ?>
-<?=$this->Form->postLink(__('Delete'),
+<? /*  =$this->Form->postLink(__('Delete'),
       ['action' => 'delete', $attribute->id],
       ['class' => 'btn btn-danger'],
       ['confirm' => __('Are you sure you want to delete # {0}?', $attribute->id)]
-    )?>
+    ) */ ?>
     </div></div>
 
 <?= $this->Form->end() ?>

@@ -8,10 +8,11 @@
 * friendsofcake/bootstrap-ui : ^0.5.0
 
 ## Functionalities
-* Population of all active attributes from the /etc/shibboleth/attribute-map.xml
+* Populates all active attributes from the /etc/shibboleth/attribute-map.xml
 * Basic add/delete functionality for attributes
-* You can add validation regex for attributes 
-* Comparation of received attributes against attributes in database with validation.
+* Optional validation regex for attributes
+* Comparation of received attributes against attributes in database with validation
+* Stores names of released attributes and validation status for each invididual user, (persistent-id, schachomeorganization)
 
 ## Preconditions
 
@@ -23,7 +24,7 @@ modify /etc/shibboleth/shibboleth2.xml
   SAML2
 </SSO>
 .
-# Remember to download certificate https://confluence.csc.fi/x/wQHcAQ
+# Example below is for a test service registered to Haka-test federation. It also uses certificate from https://confluence.csc.fi/x/wQHcAQ to validate metadata.
 <MetadataProvider type="XML" uri="https://haka.funet.fi/metadata/haka_test_metadata_signed.xml" backingFilePath="haka_test_metadata_signed.xml" reloadInterval="7200">
   <MetadataFilter type="RequireValidUntil" maxValidityInterval="2419200"/>
   <MetadataFilter type="Signature" certificate="/etc/ssl/certs/haka_testi_2015_sha2.crt"/>
@@ -34,7 +35,7 @@ modify /etc/shibboleth/shibboleth2.xml
 Protect application with shibboleth
 ```
 <VirtualHost *:443>
-  DocumentRoot <DOCUMENT ROOT>
+  DocumentRoot <DOCUMENT ROOT> 
   ServerAlias <SERVER_ALIAS>
   ErrorLog /var/www/<YOUR_SITE>/log/error.log
   CustomLog /var/www/<YOUR_SITE>/log/access.log combined
@@ -86,7 +87,7 @@ composer require csc-it-center-for-science/attribute-test-service
 
 ```
 
-### Configure Bootstrap framwork
+### Configure Bootstrap framework
 ```
 cp -R vendor/friendsofcake/bootstrap-ui/src/Template/Layout/examples src/Template/Layout/TwitterBootstrap
 ./bin/cake plugin load BootstrapUI
@@ -107,12 +108,12 @@ public function initialize()  {
 
 ...
 ```
-Get bootstrap and Jquery files under
+Make sure you have followin files in place.
 ```
-webroot/css/bootstrap
-webroot/css/fonts
+webroot/css/bootstrap/bootstrap.css
+webroot/css/fonts/glyphicons-halflinfs-reqular.woff
 
-webroot/js/bootstrap
-webroot/js/jquery
+webroot/js/bootstrap/bootstrap.js
+webroot/js/jquery/jquery.js
 ```
 
