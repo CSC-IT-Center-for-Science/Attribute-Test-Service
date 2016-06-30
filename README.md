@@ -12,7 +12,7 @@
 * Basic add/delete functionality for attributes
 * Optional validation regex for attributes
 * Comparation of received attributes against attributes in database with validation
-* Stores names of released attributes and validation status for each invdividual user (persistent-id, schachomeorganization stored as received)
+* Stores names of released attributes and validation status for each individual user (persistent-id, schachomeorganization stored as received)
 
 ## Preconditions
 
