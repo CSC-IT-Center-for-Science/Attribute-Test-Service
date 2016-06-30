@@ -1,6 +1,5 @@
 <?php
-
-namespace Attribute\Controller;
+namespace CscItCenterForScience\AttributeTestService\Controller;
 
 use App\Controller\AppController as BaseController;
 

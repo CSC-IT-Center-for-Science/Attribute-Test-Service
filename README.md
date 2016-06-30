@@ -80,13 +80,39 @@ chmod 777 ../db
 ```
 composer require csc-it-center-for-science/attribute-test-service
 
-# symlink vendor package under plugins
-ln -s  vendor/csc-it-center-for-science/attribute-test-service/ plugins/Attribute
-
-# Migrate database tables from plugin
-./bin/cake migrations migrate -p Attribute
-./bin/cake plugin load Attribute
-composer dumpautoload
-
+# Migrate database tables and load plugin
+./bin/cake migrations migrate -p CscItCenterForScience/AttributeTestService
+./bin/cake plugin load -r CscItCenterForScience/AttributeTestService
 
 ```
+
+### Configure Bootstrap framwork
+```
+cp -R vendor/friendsofcake/bootstrap-ui/src/Template/Layout/examples src/Template/Layout/TwitterBootstrap
+./bin/cake plugin load BootstrapUI
+```
+Configure src\View\AppView.php accordingly.
+```
+...
+# use Cake\View\View;
+use BootstrapUI\View\UIView;
+...
+# class AppView extends View
+class AppView extends UIView
+
+public function initialize()  {
+  // Don't forget to call the parent::initialize()
+  parent::initialize();
+}
+
+...
+```
+Get bootstrap and Jquery files under
+```
+webroot/css/bootstrap
+webroot/css/fonts
+
+webroot/js/bootstrap
+webroot/js/jquery
+```
+

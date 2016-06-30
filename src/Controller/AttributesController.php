@@ -1,7 +1,7 @@
 <?php
-namespace Attribute\Controller;
+namespace CscItCenterForScience\AttributeTestService\Controller;
 
-use Attribute\Controller\AppController;
+use CscItCenterForScience\AttributeTestService\Controller\AppController;
 use Cake\Validation\Validator;
 use Cake\Utility\Xml;
 
