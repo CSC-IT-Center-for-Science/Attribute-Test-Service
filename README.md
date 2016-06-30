@@ -12,7 +12,7 @@
 * Basic add/delete functionality for attributes
 * Optional validation regex for attributes
 * Comparation of received attributes against attributes in database with validation
-* Stores names of released attributes and validation status for each invididual user, (persistent-id, schachomeorganization)
+* Stores names of released attributes and validation status for each invdividual user (persistent-id, schachomeorganization stored as received)
 
 ## Preconditions
 
@@ -24,12 +24,18 @@ modify /etc/shibboleth/shibboleth2.xml
   SAML2
 </SSO>
 ...
-# Example below is for a test service registered to Haka-test federation. It also uses certificate from https://confluence.csc.fi/x/wQHcAQ to validate metadata.
-<MetadataProvider type="XML" uri="https://haka.funet.fi/metadata/haka_test_metadata_signed.xml" backingFilePath="haka_test_metadata_signed.xml" reloadInterval="7200">
+# Example below is for a test service registered to Haka-test federation. 
+# It also uses certificate from https://confluence.csc.fi/x/wQHcAQ to validate metadata.
+
+<MetadataProvider type="XML" uri="https://haka.funet.fi/metadata/haka_test_metadata_signed.xml" 
+                  backingFilePath="haka_test_metadata_signed.xml" reloadInterval="7200">
   <MetadataFilter type="RequireValidUntil" maxValidityInterval="2419200"/>
   <MetadataFilter type="Signature" certificate="/etc/ssl/certs/haka_testi_2015_sha2.crt"/>
 </MetadataProvider>
 ...
+
+# Configure keys and certificates which will be used with SAML messaging.
+
 <CredentialResolver type="File" key="sp.key" certificate="sp.crt"/>
 ```
 Protect application with shibboleth in Apache virtualhost configuration.
