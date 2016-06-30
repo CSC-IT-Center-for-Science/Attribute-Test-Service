@@ -7,6 +7,7 @@ $this->element('menu');
   <div class="row">
 
     <?php $i=0;
+    if (isset($attributes)) : 
     foreach ($attributes as $schema => $attribute) :
       // This one makes half of 'schemas' to go separate columns
       if($i%(count($attributes)/2) == 0) :
@@ -38,7 +39,8 @@ $this->element('menu');
           </tbody>
         </table>
     <?php $i++;
-    endforeach; ?>
+    endforeach; 
+    endif;?>
     </div>
 
   </div>
