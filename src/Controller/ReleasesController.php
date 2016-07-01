@@ -2,6 +2,7 @@
 namespace CscItCenterForScience\AttributeTestService\Controller;
 
 use CscItCenterForScience\AttributeTestService\Controller\AppController;
+use Cake\Collection\Collection;
 
 /**
  * Releases Controller
@@ -18,10 +19,34 @@ class ReleasesController extends AppController
      */
     public function index()
     {
-        $releases = $this->paginate($this->Releases);
-
-        $this->set(compact('releases'));
-        $this->set('_serialize', ['releases']);
+        $releases = $this->Releases->find('all')->all();
+        $collection = new Collection($releases);
+        $attribute_names = array_unique($collection->extract('attribute_name')->toArray());
+        $idps = array_unique($collection->extract('idp')->toArray());
+        $releasesByIdp = $collection->groupBy('idp')->toArray();
+        foreach ($idps as $idp) :
+          foreach ($attribute_names as $attribute) :
+            $releasesByIdPbyAttribute = $collection->match(['idp'=>$idp,'attribute_name'=>$attribute]);
+            $temp_result = $releasesByIdPbyAttribute->countBy(function ($result) {
+            return strtolower($result->validated) == 'fail' ? 'fail' : 'pass';
+            });
+            $results[$idp][$attribute] = $temp_result->toArray();
+          endforeach;
+        endforeach;
+        # My attributes
+        $persistentid_array = preg_split('/!/',$this->request->env('persistent-id'));
+        $persistentid = end($persistentid_array);
+        $myAttributesTemp = $this->Releases->find()->andWhere(['idp'=>$this->request->env('Shib-Identity-Provider'),'persistentid'=>$persistentid])->all();
+        $myAttributesCollection = new Collection($myAttributesTemp);
+        $myAttributes = $myAttributesCollection->groupBy('attribute_name')->toArray();
+        $this->set(compact('myAttributes'));
+        $this->set('_serialize', ['myAttributes']);
+        $this->set(compact('results'));
+        $this->set('_serialize', ['results']);
+        $this->set(compact('idps'));
+        $this->set('_serialize', ['idps']);
+        $this->set(compact('attribute_names'));
+        $this->set('_serialize', ['attribute_names']);
     }
 
     /**

@@ -81,7 +81,7 @@ class AttributesController extends AppController
               'message' => 'RegEx match fails.'
             ]);
             $errors = $validator->errors(array('value'=>$attribute['value']));
-            $validated = 'FAILED';
+            $validated = 'FAIL';
 
         }
         $temp['value'] = $attribute['value'];
@@ -89,13 +89,15 @@ class AttributesController extends AppController
         
         $attributes[$attribute['schema']] [$attribute['name']] = $temp;
         if (!empty($attribute['value'])) {
-          $attr_release = array('attribute_name'=>$attribute['name'],'organization'=>$this->request->env('schacHomeOrganization'),'persistentid'=>$this->request->env('persistent-id'),'validated'=>$validated);
-          $query = $this->Releases->find()->andWhere(['attribute_name'=>$attribute['name'],'organization'=>$this->request->env('schacHomeOrganization'),'persistentid'=>$this->request->env('persistent-id')]);
-          $id = $query->first()->id;
-          if ($id) { 
-            $release = $this->Releases->get($id, ['contain' => [] ]);
-          } else {
+          $persistentid_array = preg_split('/!/',$this->request->env('persistent-id'));
+          $persistentid = end($persistentid_array);
+          $attr_release = array('attribute_name'=>$attribute['name'],'idp'=>$this->request->env('Shib-Identity-Provider'),'persistentid'=>$persistentid,'validated'=>$validated);
+          $query = $this->Releases->find()->andWhere(['attribute_name'=>$attribute['name'],'idp'=>$this->request->env('Shib-Identity-Provider'),'persistentid'=>$persistentid]);
+          if ($query->isEmpty()) {
             $release = $this->Releases->newEntity();
+          } else {
+            $id = $query->first()->id;
+            $release = $this->Releases->get($id, ['contain' => [] ]);
           }
           $release = $this->Releases->patchEntity($release, $attr_release);
           $this->Releases->save($release);

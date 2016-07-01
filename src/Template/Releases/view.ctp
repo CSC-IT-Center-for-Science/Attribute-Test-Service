@@ -29,8 +29,8 @@ $this->end();
     </div>
     <table class="table table-striped" cellpadding="0" cellspacing="0">
         <tr>
-            <td><?= __('Organization') ?></td>
-            <td><?= h($release->organization) ?></td>
+            <td><?= __('IdP') ?></td>
+            <td><?= h($release->idp) ?></td>
         </tr>
         <tr>
             <td><?= __('Persistentid') ?></td>

@@ -59,7 +59,7 @@ class Attributes extends AbstractMigration
 
     $table = $this->table('Releases');
       $table
-        ->addColumn('organization','string',[
+        ->addColumn('idp','string',[
           'limit' => 255,
           'null' => false,
         ])

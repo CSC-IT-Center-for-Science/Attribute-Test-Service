@@ -1,45 +1,65 @@
+<style>
+th.rotate {
+  /* Something you can count on */
+  height: 140px;
+  white-space: nowrap;
+}
+
+th.rotate > div {
+  transform:
+  /* Magic Numbers */
+  translate(25px, 51px)
+  /* 45 is really 360 - 45 */
+  rotate(315deg);
+  width: 30px;
+}
+th.rotate > div > span {
+  border-bottom: 0px solid #ccc;
+  padding: 5px 80px;
+}
+</style>
+
 <?php
 /* @var $this \Cake\View\View */
 $this->extend('./Layout/TwitterBootstrap/dashboard');
 $this->element('menu');?>
 
 <?php $this->assign('tb_sidebar', '<ul class="nav nav-sidebar">' . $this->fetch('tb_actions') . '</ul>'); ?>
-
 <table class="table table-striped" cellpadding="0" cellspacing="0">
     <thead>
         <tr>
-            <th><?= $this->Paginator->sort('id'); ?></th>
-            <th><?= $this->Paginator->sort('organization'); ?></th>
-            <th><?= $this->Paginator->sort('persistentid'); ?></th>
-            <th><?= $this->Paginator->sort('attribute_name'); ?></th>
-            <th><?= $this->Paginator->sort('validated'); ?></th>
-            <th><?= $this->Paginator->sort('modified'); ?></th>
-            <th class="actions"><?= __('Actions'); ?></th>
+            <th><div><span><?=__('Identity Provider');?></span></div></th>
+            <?php foreach ($attribute_names as $attribute) : ?>
+            <th class="rotate"><div><span><?=$attribute ?></span></div></th>
+            <?php endforeach; ?>
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($releases as $release): ?>
+      <tr><td>Your releases</td>
+
+        <?php foreach ($attribute_names as $attribute) : ?>
+        <?php $background="white"; ?>
+        <?php if (isset($myAttributes[$attribute][0]->validated)) :
+          if (strtolower($myAttributes[$attribute][0]->validated)=='fail') $background="red";
+        endif;?>
+        <td bgcolor=<?php echo $background;?>>
+          <?=isset($myAttributes[$attribute][0]->validated) ? $myAttributes[$attribute][0]->validated:''; ?>
+        </td>
+        <?php endforeach;?>
+
+      </tr>
+        <?php foreach ($idps as $idp): ?>
         <tr>
-            <td><?= $this->Number->format($release->id) ?></td>
-            <td><?= h($release->organization) ?></td>
-            <td><?= h($release->persistentid) ?></td>
-            <td><?= h($release->attribute_name) ?></td>
-            <td><?= h($release->validated) ?></td>
-            <td><?= h($release->modified) ?></td>
-            <td class="actions">
-                <?= $this->Html->link('', ['action' => 'view', $release->id], ['title' => __('View'), 'class' => 'btn btn-default glyphicon glyphicon-eye-open']) ?>
-                <?= $this->Html->link('', ['action' => 'edit', $release->id], ['title' => __('Edit'), 'class' => 'btn btn-default glyphicon glyphicon-pencil']) ?>
-                <?= $this->Form->postLink('', ['action' => 'delete', $release->id], ['confirm' => __('Are you sure you want to delete # {0}?', $release->id), 'title' => __('Delete'), 'class' => 'btn btn-default glyphicon glyphicon-trash']) ?>
-            </td>
+            <td><?= $idp ?></td>
+            <?php foreach ($attribute_names as $attribute) : 
+               $pass = isset($results[$idp][$attribute]['pass']) ? $results[$idp][$attribute]['pass'] : 0; 
+               $fail = isset($results[$idp][$attribute]['fail']) ? $results[$idp][$attribute]['fail'] : 0; 
+               $ratio = round($pass / ($pass + $fail)*100) ;
+               $background="white";
+               if ($ratio<100) $background = "red";?>
+              <td bgcolor=<?php echo $background;?>><?= $ratio?>% </td>
+            <?php endforeach; ?>
         </tr>
         <?php endforeach; ?>
     </tbody>
 </table>
-<div class="paginator">
-    <ul class="pagination">
-        <?= $this->Paginator->prev('< ' . __('previous')) ?>
-        <?= $this->Paginator->numbers(['before' => '', 'after' => '']) ?>
-        <?= $this->Paginator->next(__('next') . ' >') ?>
-    </ul>
-    <p><?= $this->Paginator->counter() ?></p>
-</div>

@@ -7,7 +7,7 @@ use Cake\ORM\Entity;
  * Release Entity.
  *
  * @property int $id
- * @property string $organization
+ * @property string $idp
  * @property string $persistentid
  * @property string $attribute_name
  * @property string $validated

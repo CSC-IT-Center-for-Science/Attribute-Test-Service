@@ -44,7 +44,7 @@ class ReleasesTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->allowEmpty('organization');
+            ->allowEmpty('idp');
 
         $validator
             ->allowEmpty('persistentid');

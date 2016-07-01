@@ -19,7 +19,7 @@ $this->end();
 <fieldset>
     <legend><?= __('Add {0}', ['Release']) ?></legend>
     <?php
-    echo $this->Form->input('organization');
+    echo $this->Form->input('idp');
     echo $this->Form->input('persistentid');
     echo $this->Form->input('attribute_name');
     echo $this->Form->input('validated');
