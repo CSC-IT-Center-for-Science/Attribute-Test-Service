@@ -28,8 +28,10 @@ $this->element('menu');?>
             <td><?= h($attribute->created) ?></td>
             <td class="actions">
                 <?= $this->Html->link('', ['action' => 'view', $attribute->id], ['title' => __('View'), 'class' => 'btn btn-default glyphicon glyphicon-eye-open']) ?>
-                <?= $this->Html->link('', ['action' => 'edit', $attribute->id], ['title' => __('Edit'), 'class' => 'btn btn-default glyphicon glyphicon-pencil']) ?>
-                <?= $this->Form->postLink('', ['action' => 'delete', $attribute->id], ['confirm' => __('Are you sure you want to delete # {0}?', $attribute->id), 'title' => __('Delete'), 'class' => 'btn btn-default glyphicon glyphicon-trash']) ?>
+                <?php if ($this->request->session()->read('Auth.User.role') == 'admin') : ?>
+                  <?= $this->Html->link('', ['action' => 'edit', $attribute->id], ['title' => __('Edit'), 'class' => 'btn btn-default glyphicon glyphicon-pencil']) ?>
+                  <?= $this->Form->postLink('', ['action' => 'delete', $attribute->id], ['confirm' => __('Are you sure you want to delete # {0}?', $attribute->id), 'title' => __('Delete'), 'class' => 'btn btn-default glyphicon glyphicon-trash']) ?>
+                <?php endif;?>
             </td>
         </tr>
         <?php endforeach; ?>

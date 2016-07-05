@@ -1,25 +1,7 @@
 <?php
 $this->extend('./Layout/TwitterBootstrap/dashboard');
-$this->start('tb_actions');
-?>
-<li><?= $this->Html->link(__('Edit Attribute'), ['action' => 'edit', $attribute->id]) ?> </li>
-<li><?= $this->Form->postLink(__('Delete Attribute'), ['action' => 'delete', $attribute->id], ['confirm' => __('Are you sure you want to delete # {0}?', $attribute->id)]) ?> </li>
-<li><?= $this->Html->link(__('List Attributes'), ['action' => 'index']) ?> </li>
-<li><?= $this->Html->link(__('New Attribute'), ['action' => 'add']) ?> </li>
-<?php
-$this->end();
+$this->element('menu');?>
 
-$this->start('tb_sidebar');
-?>
-<ul class="nav nav-sidebar">
-<li><?= $this->Html->link(__('Edit Attribute'), ['action' => 'edit', $attribute->id]) ?> </li>
-<li><?= $this->Form->postLink(__('Delete Attribute'), ['action' => 'delete', $attribute->id], ['confirm' => __('Are you sure you want to delete # {0}?', $attribute->id)]) ?> </li>
-<li><?= $this->Html->link(__('List Attributes'), ['action' => 'index']) ?> </li>
-<li><?= $this->Html->link(__('New Attribute'), ['action' => 'add']) ?> </li>
-</ul>
-<?php
-$this->end();
-?>
 <div class="panel panel-default">
     <!-- Panel header -->
     <div class="panel-heading">

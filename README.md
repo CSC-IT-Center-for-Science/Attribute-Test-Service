@@ -121,4 +121,54 @@ public function initialize()  {
   parent::initialize();
 }
 ```
-And you should be good to go. Attribute plugin should be found from https://YOUR_SITE/attribute/attributes/index.
+
+### Authorization (Shibboleth handles the authentication)
+To use Auth component with shibboleth SAML authentication. In your project 'src/Controller/AppController.php' modify accordingly.
+```
+   public function initialize()
+    {
+        parent::initialize();
+
+        $this->loadComponent('RequestHandler');
+        $this->loadComponent('Flash');
+        $this->loadComponent('Auth',[
+                              'authorize' => [
+                                'Controller'
+                              ],
+                              'flash' => [
+                                'element' => 'error',
+                                'key' => 'auth'
+                              ],
+                            ]);
+        $role =  (strtolower($this->request->env('schachomeorganization'))=='csc.fi') ? 'admin' : 'user';
+
+        if (!$this->Auth->user()) :
+          $this->Auth->setUser(array('username'=>$this->request->env('displayname'),
+                                     'email'=>$this->request->env('mail'),
+                                     'eppn'=>$this->request->env('edupersonprincipalname'),
+                                     'sn'=>$this->request->env('sn'),
+                                     'givenname'=>$this->request->env('givenname'),
+                                     'role'=>$role
+                              ));
+        endif;
+        $this->Auth->allow(['login','index','test','view']);
+
+    }
+
+    public function isAuthorized($user)
+    {
+      if(isset($user['role'])) :
+        if ($user['role']=='admin') :
+          return true;
+        endif;
+      endif;
+      return false;
+    }
+
+```
+To show also Auth related flash messages, make sure you have both renders in your 'src/Template/Layout/TwitterBootstrap/dashboard.ctp'
+```
+echo $this->Flash->render();
+echo $this->Flash->render('auth');
+```
+Now you should be good to go. Attribute plugin should be found from https://YOUR_SITE/attribute/attributes/index.
