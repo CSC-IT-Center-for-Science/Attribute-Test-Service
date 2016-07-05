@@ -38,7 +38,7 @@ modify /etc/shibboleth/shibboleth2.xml
 
 <CredentialResolver type="File" key="sp.key" certificate="sp.crt"/>
 ```
-Protect application with shibboleth in Apache virtualhost configuration.
+Protect application with shibboleth in Apache virtualhost configuration, this one uses lazy login.
 ```
 <VirtualHost *:443>
   DocumentRoot <DOCUMENT ROOT> 
@@ -49,8 +49,8 @@ Protect application with shibboleth in Apache virtualhost configuration.
   SSLEngine on
   <Location /www>
     AuthType shibboleth
-    ShibRequireSession On
-    require valid-user
+    ShibRequireSession Off
+    require shibbolet
   </Location>
 </VirtualHost>
 ```
@@ -125,7 +125,7 @@ public function initialize()  {
 ### Authorization (Shibboleth handles the authentication)
 To use Auth component with shibboleth SAML authentication. In your project 'src/Controller/AppController.php' modify accordingly.
 ```
-   public function initialize()
+    public function initialize()
     {
         parent::initialize();
 
@@ -135,23 +135,28 @@ To use Auth component with shibboleth SAML authentication. In your project 'src/
                               'authorize' => [
                                 'Controller'
                               ],
+                              'loginAction' => [
+                                'controller' => 'attribute/releases',
+                                'action' => 'index'
+                              ],
                               'flash' => [
                                 'element' => 'error',
                                 'key' => 'auth'
                               ],
                             ]);
-        $role =  (strtolower($this->request->env('schachomeorganization'))=='csc.fi') ? 'admin' : 'user';
-
-        if (!$this->Auth->user()) :
-          $this->Auth->setUser(array('username'=>$this->request->env('displayname'),
-                                     'email'=>$this->request->env('mail'),
-                                     'eppn'=>$this->request->env('edupersonprincipalname'),
-                                     'sn'=>$this->request->env('sn'),
-                                     'givenname'=>$this->request->env('givenname'),
-                                     'role'=>$role
-                              ));
+        if ($this->request->env('Shib-Session-ID')!==null && $this->Auth->user('role')===null) :
+            $role =  (strtolower($this->request->env('schachomeorganization'))=='csc.fi') ? 'admin' : 'user';
+            $this->Auth->setUser(array('username'=>$this->request->env('displayname'),
+                                       'email'=>$this->request->env('mail'),
+                                       'eppn'=>$this->request->env('edupersonprincipalname'),
+                                       'sn'=>$this->request->env('sn'),
+                                       'givenname'=>$this->request->env('givenname'),
+                                       'role'=>$role
+                                       ));
+        elseif ($this->request->env('Shib-Session-ID')===null && $this->Auth->user('role')!==null) :
+          $this->Auth->logout();
         endif;
-        $this->Auth->allow(['login','index','test','view']);
+        $this->Auth->allow(['index','test','view']);
 
     }
 
@@ -164,8 +169,16 @@ To use Auth component with shibboleth SAML authentication. In your project 'src/
       endif;
       return false;
     }
-
 ```
+Enable login/logout buttons in 'src/Template/Layout/TwitterBootstrap/dashboard.ctp'
+```
+<?php if ($this->request->session()->read('Auth.User.role') != null) : ?>
+  <a href="https://<?=$this->request->host();?>/Shibboleth.sso/Logout?return=https://<?=$this->request->host();?>/attribute/attributes/test" title="Logout" class="btn btn-default glyphicon glyphicon-log-out navbar-nav navbar-right"></a>
+<?php else :  ?>
+  <a href="https://<?=$this->request->host();?>/Shibboleth.sso/Login?target=https://<?=$this->request->host();?>/attribute/attributes/test&entityID=https://testidp.funet.fi/idp/shibboleth" title="Login" class="btn btn-default glyphicon glyphicon-log-in navbar-nav navbar-right"></a>
+<?php endif; ?>
+```
+
 To show also Auth related flash messages, make sure you have both renders in your 'src/Template/Layout/TwitterBootstrap/dashboard.ctp'
 ```
 echo $this->Flash->render();
