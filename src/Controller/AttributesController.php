@@ -66,6 +66,7 @@ class AttributesController extends AppController
 
     public function test()
     {
+      if ($this->request->env('Shib-Session-ID')===null) $this->Flash->warning('To test your attribute releases, you have to login first');
       $this->loadModel('Releases');
       foreach ($this->Attributes->find('all') as $attribute) :
         unset($temp);
