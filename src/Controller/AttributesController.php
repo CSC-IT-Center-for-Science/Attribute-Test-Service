@@ -21,6 +21,7 @@ class AttributesController extends AppController
     public function index()
     {
         $attributes = $this->paginate($this->Attributes);
+	if ($attributes->isEmpty()) $this->map();
 	$this->loadModel('Releases');
 	foreach ($attributes as $attribute) :
 	  $attribute['value'] = $this->request->env($attribute['name']);
