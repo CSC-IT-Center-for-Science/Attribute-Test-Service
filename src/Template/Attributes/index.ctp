@@ -6,12 +6,10 @@ $this->element('menu');?>
 <table class="table table-striped" cellpadding="0" cellspacing="0">
     <thead>
         <tr>
-            <th><?= $this->Paginator->sort('id'); ?></th>
-            <th><?= $this->Paginator->sort('friendlyname'); ?></th>
-            <th><?= $this->Paginator->sort('oid'); ?></th>
-            <th><?= $this->Paginator->sort('name'); ?></th>
-            <th><?= $this->Paginator->sort('schema'); ?></th>
-            <th><?= $this->Paginator->sort('validation'); ?></th>
+<!--        <th><?= $this->Paginator->sort('id'); ?></th> -->
+            <th><?= $this->Paginator->sort('friendlyname');?> / <?= $this->Paginator->sort('oid'); ?> </th>
+            <th><?= $this->Paginator->sort('name'); ?> / <?= $this->Paginator->sort('schema'); ?></th>
+            <th><?= $this->Paginator->sort('value');?> / <?= $this->Paginator->sort('validation'); ?></th>
             <th><?= $this->Paginator->sort('created'); ?></th>
             <th class="actions"><?= __('Actions'); ?></th>
         </tr>
@@ -19,12 +17,14 @@ $this->element('menu');?>
     <tbody>
         <?php foreach ($attributes as $attribute): ?>
         <tr>
-            <td><?= $this->Number->format($attribute->id) ?></td>
-            <td><?= h($attribute->friendlyname) ?></td>
-            <td><?= h($attribute->oid) ?></td>
-            <td><?= h($attribute->name) ?></td>
-            <td><?= h($attribute->schema) ?></td>
-            <td><?= h($attribute->validation) ?></td>
+            <!-- <td><?= $this->Number->format($attribute->id) ?></td> -->
+            <td><b><?= h($attribute->friendlyname) ?></b><br/>
+            <?= h($attribute->oid) ?></td>
+            <td><?= h($attribute->name) ?> <br/> <?= h($attribute->schema) ?></td>
+
+
+	    <td><?=isset($attribute['errors']) ? '<font color=red>'.$attribute->value."<br/>".$attribute->validation.'</font>' :  $attribute->value."<br/>".$attribute->validation ?>
+	    </td>
             <td><?= h($attribute->created) ?></td>
             <td class="actions">
                 <?= $this->Html->link('', ['action' => 'view', $attribute->id], ['title' => __('View'), 'class' => 'btn btn-default glyphicon glyphicon-eye-open']) ?>

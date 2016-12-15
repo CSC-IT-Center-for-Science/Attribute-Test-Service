@@ -21,7 +21,37 @@ class AttributesController extends AppController
     public function index()
     {
         $attributes = $this->paginate($this->Attributes);
-
+	$this->loadModel('Releases');
+	foreach ($attributes as $attribute) :
+	  $attribute['value'] = $this->request->env($attribute['name']);
+          $validated = 'N/A';
+          if (!empty($attribute['validation'])) {
+            $validator = new Validator();
+            $validator
+              ->allowEmpty('value')
+              ->add('value', 'validFormat', [
+                'rule' => array('custom', '/^('.$attribute['validation'].')$/i'),
+                'message' => 'RegEx match fails.'
+              ]);
+              $errors = $validator->errors(array('value'=>$attribute['value']));
+              $validated = 'FAIL';
+          }
+          if (!empty($errors)) $attribute['errors'] = $errors['value'];
+          if (!empty($attribute['value'])) {
+            $persistentid_array = preg_split('/!/',$this->request->env('persistent-id'));
+            $persistentid = end($persistentid_array);
+            $attr_release = array('attribute_name'=>$attribute['name'],'idp'=>$this->request->env('Shib-Identity-Provider'),'persistentid'=>$persistentid,'validated'=>$validated);
+            $query = $this->Releases->find()->andWhere(['attribute_name'=>$attribute['name'],'idp'=>$this->request->env('Shib-Identity-Provider'),'persistentid'=>$persistentid]);
+            if ($query->isEmpty()) {
+              $release = $this->Releases->newEntity();
+            } else {
+              $id = $query->first()->id;
+              $release = $this->Releases->get($id, ['contain' => [] ]);
+            }
+            $release = $this->Releases->patchEntity($release, $attr_release);
+            $this->Releases->save($release);
+          }
+  	endforeach;
         $this->set(compact('attributes'));
         $this->set('_serialize', ['attributes']);
     }
