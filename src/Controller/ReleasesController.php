@@ -1,7 +1,7 @@
 <?php
-namespace CscItCenterForScience\AttributeTestService\Controller;
+namespace cscfi\AttributeTestService\Controller;
 
-use CscItCenterForScience\AttributeTestService\Controller\AppController;
+use cscfi\AttributeTestService\Controller\AppController;
 use Cake\Collection\Collection;
 
 /**
