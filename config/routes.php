@@ -3,7 +3,7 @@ use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 
 Router::plugin(
-    'CscItCenterForScience/AttributeTestService',
+    'cscfi/AttributeTestService',
     ['path' => '/attribute'],
     function (RouteBuilder $routes) {
         $routes->fallbacks('DashedRoute');
