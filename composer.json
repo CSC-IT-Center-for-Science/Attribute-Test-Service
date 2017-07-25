@@ -1,7 +1,7 @@
 {
-    "name": "csc-it-center-for-science/attribute-test-service",
+    "name": "cscfi/attribute-test-service",
     "description": "SAML Attribute test service for shibboleth",
-    "homepage": "https://github.com/CSC-IT-Center-for-Science/Attribute-Test-Service",
+    "homepage": "https://github.com/CSCfi/Attribute-Test-Service",
     "type": "cakephp-plugin",
     "license": "MIT",
     "require": {
@@ -21,7 +21,7 @@
     },
     "autoload": {
         "psr-4": {
-            "CscItCenterForScience\\AttributeTestService\\": "src"
+            "cscfi\\AttributeTestService\\": "src"
         }
     },
 
@@ -30,6 +30,6 @@
       "post-create-project-cmd": "App\\Console\\Installer::postInstall",
       "post-autoload-dump": "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump"
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true
 }
