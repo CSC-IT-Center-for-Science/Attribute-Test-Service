@@ -1,7 +1,7 @@
 <?php
-namespace cscfi\AttributeTestService\Controller;
+namespace Cscfi\AttributeTestService\Controller;
 
-use cscfi\AttributeTestService\Controller\AppController;
+use Cscfi\AttributeTestService\Controller\AppController;
 use Cake\Validation\Validator;
 use Cake\Utility\Xml;
 use Cake\Event\Event;
