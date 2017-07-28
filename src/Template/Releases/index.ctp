@@ -48,6 +48,7 @@ $this->element('menu');?>
         <?php $background="white"; ?>
         <?php if (isset($myAttributes[$attribute][0]->validated)) :
           if (strtolower($myAttributes[$attribute][0]->validated)=='fail') $background="red";
+	  elseif (strtolower($myAttributes[$attribute][0]->validated)=='pass') $background="green";
         endif;?>
         <td class="box" bgcolor=<?php echo $background;?>>
           <small><?=isset($myAttributes[$attribute][0]->validated) ? $myAttributes[$attribute][0]->validated:''; ?></small>

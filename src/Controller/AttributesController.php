@@ -26,18 +26,19 @@ class AttributesController extends AppController
 	foreach ($attributes as $attribute) :
 	  $attribute['value'] = $this->request->env($attribute['name']);
           $validated = 'N/A';
-          if (!empty($attribute['validation'])) {
+          if (!empty($attribute['validation']) && (!empty($attribute['value']))) {
+	    $validated = 'FAIL';
             $validator = new Validator();
             $validator
               ->allowEmpty('value')
               ->add('value', 'validFormat', [
-                'rule' => array('custom', '/^('.$attribute['validation'].')$/i'),
+ 		'rule' => array('custom', '('.$attribute['validation'].')'),
                 'message' => 'RegEx match fails.'
               ]);
-              $errors = $validator->errors(array('value'=>$attribute['value']));
-              $validated = 'FAIL';
-          }
-          if (!empty($errors)) $attribute['errors'] = $errors['value'];
+              if (!$validator->errors(array('value'=>$attribute['value'])))
+	    	$validated = 'PASS';
+	  }
+	  $attribute['validated'] = $validated;
           if (!empty($attribute['value'])) {
             $persistentid_array = preg_split('/!/',$this->request->env('persistent-id'));
             $persistentid = end($persistentid_array);
@@ -105,7 +106,8 @@ class AttributesController extends AppController
         $temp['validator'] = $attribute['validation'];
         $attribute['value'] = $this->request->env($attribute->name);
         $validated = 'N/A';
-        if (!empty($attribute['validation'])) {
+        if (!empty($attribute['validation']) && !empty($attribute['value'])) {
+          $validated = 'FAIL';
           $validator = new Validator();
           $validator
             ->allowEmpty('value')
@@ -113,12 +115,11 @@ class AttributesController extends AppController
               'rule' => array('custom', '/^('.$attribute['validation'].')$/i'),
               'message' => 'RegEx match fails.'
             ]);
-            $errors = $validator->errors(array('value'=>$attribute['value']));
-            $validated = 'FAIL';
-
+           if (!$validator->errors(array('value'=>$attribute['value'])))
+                $validated = 'PASS';
         }
         $temp['value'] = $attribute['value'];
-        if (!empty($errors)) $temp['errors'] = $errors['value'];
+        $attribute['validated'] = $validated;
         
         $attributes[$attribute['schema']] [$attribute['name']] = $temp;
         if (!empty($attribute['value'])) {

@@ -8,7 +8,7 @@ $this->element('menu');?>
         <tr>
 <!--        <th><?= $this->Paginator->sort('id'); ?></th> -->
             <th><?= $this->Paginator->sort('friendlyname');?> / <?= $this->Paginator->sort('oid'); ?> </th>
-            <th><?= $this->Paginator->sort('name'); ?> / <?= $this->Paginator->sort('schema'); ?></th>
+<!--            <th><?= $this->Paginator->sort('name'); ?> / <?= $this->Paginator->sort('schema'); ?></th> -->
             <th><?= $this->Paginator->sort('value');?> / <?= $this->Paginator->sort('validation'); ?></th>
             <th><?= $this->Paginator->sort('created'); ?></th>
             <th class="actions"><?= __('Actions'); ?></th>
@@ -20,10 +20,18 @@ $this->element('menu');?>
             <!-- <td><?= $this->Number->format($attribute->id) ?></td> -->
             <td><b><?= h($attribute->friendlyname) ?></b><br/>
             <?= h($attribute->oid) ?></td>
-            <td><?= h($attribute->name) ?> <br/> <?= h($attribute->schema) ?></td>
+      <!--       <td><?= h($attribute->name) ?> <br/> <?= h($attribute->schema) ?></td> -->
 
 
-	    <td><?=isset($attribute['errors']) ? '<font color=red>'.$attribute->value."<br/>".$attribute->validation.'</font>' :  $attribute->value."<br/>".$attribute->validation ?>
+	    <td> <?php
+		  if ($attribute['validated']=='FAIL')
+ 			echo '<font color=red><b>'.$attribute->value.'</b></font>';
+                  elseif ($attribute['validated']=='PASS')
+                        echo '<font color=green><b>'.$attribute->value.'</b></font>';
+                  else echo '<b>'.$attribute->value.'</b>'; 
+
+                  echo "<br/>".$attribute->validation; ?>
+		
 	    </td>
             <td><?= h($attribute->created) ?></td>
             <td class="actions">
