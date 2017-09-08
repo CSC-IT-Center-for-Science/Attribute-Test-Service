@@ -10,4 +10,3 @@
 <li><?= $this->Html->link(__('Show All Releases'),       ['controller' => 'releases',   'action' => 'index']); ?></li>
 
 <?php $this->end(); ?>
-<?php $this->assign('tb_sidebar', '<ul class="nav nav-sidebar">' . $this->fetch('tb_actions') . '</ul>'); ?>

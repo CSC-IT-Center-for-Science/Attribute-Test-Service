@@ -28,7 +28,7 @@ $this->element('menu');?>
             <td><?= __('Validation') ?></td>
             <td><?= h($attribute->validation) ?></td>
         </tr>
-        <tr>
+<!--        <tr>
             <td><?= __('Id') ?></td>
             <td><?= $this->Number->format($attribute->id) ?></td>
         </tr>
@@ -39,7 +39,7 @@ $this->element('menu');?>
         <tr>
             <td><?= __('Modified') ?></td>
             <td><?= h($attribute->modified) ?></td>
-        </tr>
+        </tr> -->
     </table>
 </div>
 
