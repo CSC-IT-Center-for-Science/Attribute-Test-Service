@@ -3,6 +3,8 @@
 $this->extend('./Layout/TwitterBootstrap/dashboard');
 $this->element('menu');?>
 
+<?php $this->assign('tb_sidebar', '<ul class="nav nav-sidebar">' . $this->fetch('tb_actions') . '</ul>'); ?>
+
 <table class="table table-striped" cellpadding="0" cellspacing="0">
     <thead>
         <tr>
