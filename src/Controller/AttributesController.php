@@ -13,6 +13,8 @@ use Cake\Event\Event;
  */
 class AttributesController extends AppController
 {
+    public $paginate = ['limit' => 100];
+
     /**
      * Index method
      *
