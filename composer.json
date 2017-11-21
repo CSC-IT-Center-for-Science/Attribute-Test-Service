@@ -5,30 +5,22 @@
     "type": "cakephp-plugin",
     "license": "MIT",
     "require": {
-        "php": ">=7.0.0",
-        "cakephp/cakephp": "~3.3",
-        "mobiledetect/mobiledetectlib": "2.*",
-        "cakephp/migrations": "~1.0",
-        "cakephp/plugin-installer": "*",
-        "friendsofcake/bootstrap-ui": "^0.5.0",
-        "psy/psysh": "@stable",
-        "cakephp/bake": "~1.1"
+      "php": ">=7.0.0",
+      "cakephp/cakephp": "~3.3",
+      "mobiledetect/mobiledetectlib": "2.*",
+      "cakephp/migrations": "~1.0",
+      "psy/psysh": "@stable"
     },
     "suggest": {
-        "phpunit/phpunit": "Allows automated tests to be run without system-wide install.",
-        "cakephp/cakephp-codesniffer": "Allows to check the code against the coding standards used in CakePHP."
-    },
-    "autoload": {
-        "psr-4": {
-            "Cscfi\\AttributeTestService\\": "src"
-        }
+      "phpunit/phpunit": "Allows automated tests to be run without system-wide install.",
+      "cakephp/cakephp-codesniffer": "Allows to check the code against the coding standards used in CakePHP."
     },
     "config": {
-		"vendor-dir": "app/Vendor"
-	},
-	"bin": [
-		"lib/Cake/Console/cake"
-	],
+      "vendor-dir": "app/Vendor"
+    },
+    "bin": [
+      "lib/Cake/Console/cake"
+    ],
     "minimum-stability": "stable",
     "prefer-stable": true
 }
