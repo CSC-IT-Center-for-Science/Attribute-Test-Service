@@ -15,20 +15,15 @@
         "cakephp/bake": "~1.1"
     },
     "suggest": {
-        "phpunit/phpunit": "Allows automated tests to be run without system-wide install.",
-        "cakephp/cakephp-codesniffer": "Allows to check the code against the coding standards used in CakePHP."
+      "phpunit/phpunit": "Allows automated tests to be run without system-wide install.",
+      "cakephp/cakephp-codesniffer": "Allows to check the code against the coding standards used in CakePHP."
     },
-    "autoload": {
-        "psr-4": {
-            "Cscfi\\AttributeTestService\\": "src"
-        }
+    "config": {
+      "vendor-dir": "app/Vendor"
     },
-
-    "scripts": {
-      "post-install-cmd": "App\\Console\\Installer::postInstall",
-      "post-create-project-cmd": "App\\Console\\Installer::postInstall",
-      "post-autoload-dump": "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump"
-    },
+    "bin": [
+      "lib/Cake/Console/cake"
+    ],
     "minimum-stability": "stable",
     "prefer-stable": true
 }
